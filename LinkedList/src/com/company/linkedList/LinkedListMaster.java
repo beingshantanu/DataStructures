@@ -58,7 +58,7 @@ public class LinkedListMaster {
         if (this.isEmptyList()) {
             System.out.println("List is Empty");
         } else {
-            int i = 1;
+            int i = 0;
             while (temp != null) {
                 System.out.format("Data[%d]: %d \n", (i++), temp.getItem());
                 temp = temp.getLink();
