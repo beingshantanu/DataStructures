@@ -47,7 +47,7 @@ public class Main {
                     break;
                 }
                 case 7:{
-                    System.out.println("Print List:");
+                    System.out.println("All Items:");
                     linkedList.printList();
                     break;
                 }
