@@ -83,7 +83,6 @@ public class LinkedListMaster {
         if (this.head == null) {
             isEmpty = true;
         }
-
         return isEmpty;
     }
 
