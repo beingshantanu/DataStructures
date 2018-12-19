@@ -1,18 +1,20 @@
 package com.company.linkedList;
 
 
-public class LinkedListMaster {
-    private Node head;
+import java.util.Iterator;
+
+public class LinkedListMaster<Item> implements Iterable<Item> {
+    private Node<Item> head;
 
     public LinkedListMaster() {
         this.head = null;
     }
 
-    public boolean insertItemAtStart(int item) {
+    public boolean insertItemAtStart(Item item) {
         boolean isInserted = false;
         try {
             if (!this.isEmptyList()) {
-                Node node = new Node();
+                Node<Item> node = new Node<>();
                 node.setItem(item);
                 node.setLink(this.head);
                 this.head = node;
@@ -29,11 +31,11 @@ public class LinkedListMaster {
         return isInserted;
     }
 
-    public boolean insertItemAtEnd(int item) {
+    public boolean insertItemAtEnd(Item item) {
         boolean isInserted = false;
         try {
             if (!this.isEmptyList()) {
-                Node temp = this.head;
+                Node<Item> temp = this.head;
                 while (temp.getLink() != null) {
                     temp = temp.getLink();
                 }
@@ -42,7 +44,7 @@ public class LinkedListMaster {
                 temp.getLink().setItem(item);
 
             } else {
-                this.head = new Node();
+                this.head = new Node<>();
                 this.head.setItem(item);
             }
             isInserted = true;
@@ -54,11 +56,11 @@ public class LinkedListMaster {
         return isInserted;
     }
 
-    public boolean insertItemAtPos(int item, int pos) {
+    public boolean insertItemAtPos(Item item, int pos) {
         boolean isInserted = true;
         try {
             if (pos == 1) {
-                Node newNode = new Node();
+                Node<Item> newNode = new Node<>();
                 newNode.setItem(item);
 
                 Node temp = this.head;
@@ -66,7 +68,7 @@ public class LinkedListMaster {
                 this.head = newNode;
 
             } else if (this.getSize() >= pos) {
-                Node newNode = new Node();
+                Node<Item> newNode = new Node<>();
                 newNode.setItem(item);
                 Node temp = this.head;
 
@@ -86,17 +88,17 @@ public class LinkedListMaster {
         return isInserted;
     }
 
-    public DeletedModel deleteItemAtEnd() {
-        DeletedModel deletedModel = new DeletedModel();
+    public DeletedModel<Item> deleteItemAtEnd() {
+        DeletedModel<Item> deletedModel = new DeletedModel<>();
         deletedModel.setIsDeleted(false);
         try {
             if (!this.isEmptyList()) {
-                Node temp = this.head;
+                Node<Item> temp = this.head;
                 while (temp.getLink().getLink() != null) {
                     temp = temp.getLink();
                 }
 
-                deletedModel.setDeletedItem(temp.getLink().getItem());
+                deletedModel.setDeletedItem((Item) temp.getLink().getItem());
                 temp.setLink(null);
             }
             deletedModel.setIsDeleted(true);
@@ -108,12 +110,12 @@ public class LinkedListMaster {
         return deletedModel;
     }
 
-    public DeletedModel deleteItemAtStart() {
-        DeletedModel deletedModel = new DeletedModel();
+    public DeletedModel<Item> deleteItemAtStart() {
+        DeletedModel<Item> deletedModel = new DeletedModel<>();
         deletedModel.setIsDeleted(false);
         try {
             if (!this.isEmptyList()) {
-                Node temp = this.head;
+                Node<Item> temp = this.head;
                 deletedModel.setDeletedItem(temp.getItem());
                 temp = temp.getLink();
                 this.head = temp;
@@ -127,8 +129,8 @@ public class LinkedListMaster {
         return deletedModel;
     }
 
-    public DeletedModel deleteItemAtPos(int pos) {
-        DeletedModel deletedModel = new DeletedModel();
+    public DeletedModel<Item> deleteItemAtPos(int pos) {
+        DeletedModel<Item> deletedModel = new DeletedModel<>();
         deletedModel.setIsDeleted(true);
         try {
             if (pos == 1) {
@@ -136,12 +138,12 @@ public class LinkedListMaster {
                         .getDeletedItem());
 
             } else if (this.getSize() >= pos) {
-                Node temp = this.head;
+                Node<Item> temp = this.head;
 
                 for (int index = 1; index < (pos - 2); index++) {
                     temp = temp.getLink();
                 }
-                deletedModel.setDeletedItem(temp.getLink().getItem());
+                deletedModel.setDeletedItem((Item) temp.getLink().getItem());
                 temp.setLink(temp.getLink().getLink());
             } else {
                 deletedModel.setIsDeleted(false);
@@ -154,13 +156,13 @@ public class LinkedListMaster {
     }
 
     public void printList() {
-        Node temp = this.head;
+        Node<Item> temp = this.head;
         if (this.isEmptyList()) {
             System.out.println("List is Empty");
         } else {
             int i = 1;
             while (temp != null) {
-                System.out.format("Data[%d]: %d \n", (i++), temp.getItem());
+                System.out.println("Data[" + (i++) + "]:" + temp.getItem());
                 temp = temp.getLink();
             }
         }
@@ -168,7 +170,7 @@ public class LinkedListMaster {
 
     public int getSize() {
         int size = 0;
-        Node temp = this.head;
+        Node<Item> temp = this.head;
 
         while (temp != null) {
             ++size;
@@ -186,4 +188,34 @@ public class LinkedListMaster {
         return isEmpty;
     }
 
+    @Override
+    public Iterator<Item> iterator() {
+        return new LinkedListMasterIterator(head);
+    }
+
+    private class LinkedListMasterIterator implements Iterator<Item> {
+
+        private Node<Item> current;
+
+        public LinkedListMasterIterator(Node<Item> head) {
+            this.current = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.current != null;
+        }
+
+        @Override
+        public Item next() {
+            Item item = this.current.getItem();
+            this.current = this.current.getLink();
+            return item;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+    }
 }
