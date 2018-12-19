@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Operation {
+
     public void linkedListOperations() {
         System.out.println("---> Linked List Operations Menu <---");
         System.out.println("1. Insert at the Start");
@@ -194,6 +195,48 @@ public class Operation {
         } while (choice != 4);
 
         System.out.println("Queue execution ended");
+    }
+
+    public Double evaluateArithMaticExpression(String expr) {
+        // ((1*2)+3)
+        Double exprValue = null;
+        if(expr.startsWith("(") && expr.endsWith(")")) {
+            StackMaster<Character> operatorStack = new StackMaster<Character>();
+            StackMaster<Double> operandStack = new StackMaster<Double>();
+            char[] c = expr.toCharArray();
+            for (int i = 0; i < c.length; i++) {
+                if (c[i] == '(' || c[i] == ' ') {
+
+                } else if (c[i] == '+' || c[i] == '*') {
+                    operatorStack.push(c[i]);
+                } else if (c[i] == ')') {
+                    Double firstOperand = operandStack.pop();
+                    Double secondOperand = operandStack.pop();
+                    char operator = operatorStack.pop();
+                    switch (operator) {
+                        case '*': {
+                            operandStack.push(firstOperand * secondOperand);
+                            break;
+                        }
+                        case '+': {
+                            operandStack.push(firstOperand + secondOperand);
+                            break;
+                        }
+                    }
+                } else if (c[i] >= '0' && c[i] <= '9') {
+                    StringBuffer sb = new StringBuffer();
+                    while (c[i] >= '0' && c[i] <= '9') {
+                        sb.append(c[i]);
+                        i++;
+                    }
+                    operandStack.push(Double.parseDouble(sb.toString()));
+                    i--;
+
+                }
+            }
+            exprValue = operandStack.pop();
+        }
+        return exprValue;
     }
 }
 
