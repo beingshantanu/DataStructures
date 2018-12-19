@@ -1,14 +1,14 @@
 package com.company.linkedList;
 
-public class Node {
-    private int item;
-    private Node link;
+public class Node<Item> {
+    private Item item;
+    private Node<Item> link;
 
     public Node() {
         this.link = null;
     }
 
-    public int getItem() {
+    public Item getItem() {
         return item;
     }
 
@@ -16,11 +16,11 @@ public class Node {
         return link;
     }
 
-    public void setItem(int item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
-    public void setLink(Node link) {
+    public void setLink(Node<Item> link) {
         this.link = link;
     }
 }

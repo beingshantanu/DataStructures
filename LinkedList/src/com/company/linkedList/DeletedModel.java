@@ -1,11 +1,11 @@
 package com.company.linkedList;
 
-public class DeletedModel {
-    public int getDeletedItem() {
+public class DeletedModel<Item> {
+    public Item getDeletedItem() {
         return deletedItem;
     }
 
-    public void setDeletedItem(int deletedItem) {
+    public void setDeletedItem(Item deletedItem) {
         this.deletedItem = deletedItem;
     }
 
@@ -17,6 +17,6 @@ public class DeletedModel {
         this.isDeleted = isDeleted;
     }
 
-    private int deletedItem;
+    private Item deletedItem;
     private boolean isDeleted;
 }
