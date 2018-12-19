@@ -2,6 +2,7 @@ package com.company.operations;
 
 import com.company.linkedList.DeletedModel;
 import com.company.linkedList.LinkedListMaster;
+import com.company.linkedList.QueueMaster;
 import com.company.linkedList.StackMaster;
 
 import java.util.Iterator;
@@ -155,6 +156,44 @@ public class Operation {
         } while (choice != 4);
 
         System.out.println("Stack execution ended");
+    }
+
+    public void queueOperations() {
+        System.out.println("---> Queue Operations Menu <---");
+        System.out.println("1. Enqueue");
+        System.out.println("2. Dequeue");
+        System.out.println("3. Print");
+        System.out.println("4. End");
+        QueueMaster<Float> queue = new QueueMaster<>();
+        Scanner scan = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Enter Choice: ");
+            choice = scan.nextInt();
+            switch (choice) {
+                case 1: {
+                    System.out.println("Enter item to Enqueue:");
+                    float item = scan.nextFloat();
+                    queue.enQueue(item);
+                    break;
+                }
+                case 2: {
+                    Float item = queue.deQueue();
+                    System.out.println("Item popped:" + item);
+                    break;
+                }
+                case 3: {
+                    Iterator<Float> it = queue.iterator();
+                    int i = 0;
+                    while (it.hasNext()) {
+                        System.out.println("Data[" + (i++) + "]:" + it.next());
+                    }
+                    break;
+                }
+            }
+        } while (choice != 4);
+
+        System.out.println("Queue execution ended");
     }
 }
 
