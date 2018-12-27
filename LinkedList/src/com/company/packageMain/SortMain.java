@@ -1,53 +1,36 @@
-package com.company;
+package com.company.packageMain;
+
+import com.company.sort.Sort;
 
 public class SortMain {
 
-    public static void merge(int[] arr, int low, int mid, int high) {
-        int[] firstHalf = new int[mid - low + 1];
-        int[] secondHalf = new int[high - mid];
-
-        int firstIndex = 0;
-        int secondIndex = 0;
-        int index = 0;
-
-        for (int i = low; i <= mid; i++) {
-            firstHalf[firstIndex++] = arr[i];
+    public static void mergeSortDemo(int []arr) {
+        int low = 0;
+        int high = arr.length - 1;
+        new Sort().mergeSort(arr, low, high);
+        System.out.println("Merge Sort Demo: ");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + "\t");
         }
+    }
 
-        for (int j = mid + 1; j <= high; j++) {
-            secondHalf[secondIndex++] = arr[j];
+    public static void quickSortDemo(int []arr){
+        int low = 0;
+        int high = arr.length - 1;
+        new Sort().quickSort(arr, low, high);
+        System.out.println("Quick Sort Demo: ");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + "\t");
         }
-
-        firstIndex = secondIndex = 0;
-        while (firstIndex < firstHalf.length && secondIndex < secondHalf.length) {
-            if (firstHalf[firstIndex] <= secondHalf[secondIndex]) {
-                arr[index++] = firstHalf[firstIndex++];
-            } else if (secondHalf[secondIndex] <= firstHalf[firstIndex]) {
-                arr[index++] = secondHalf[secondIndex++];
-            }
-        }
-
-        if (firstHalf.length > secondHalf.length) {
-            for (int l = firstIndex; l < firstHalf.length; l++) {
-                arr[index++] = firstHalf[l];
-            }
-        } else {
-            for (int m = secondIndex; m < secondHalf.length; m++) {
-                arr[index++] = secondHalf[m];
-            }
-        }
-
     }
 
     public static void main(String[] args) {
         int[] arr = {1, 3, 5, 7, 1, 4, 6};
-        int low = 0;
-        int high = arr.length;
-        int mid = (low + high) / 2;
-        merge(arr, low, mid, high - 1);
+        // int[] arr = {1,8,9,2,5,7};
+        // int []arr = {12, 11, 13, 5, 6, 7};
+        // int []arr = {10, 7, 8, 6, 1, 9};
 
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
+        // mergeSortDemo(arr);
+         quickSortDemo(arr);
     }
 }
