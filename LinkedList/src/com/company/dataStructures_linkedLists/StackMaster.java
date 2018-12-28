@@ -1,4 +1,4 @@
-package com.company.linkedList;
+package com.company.dataStructures_linkedLists;
 
 import java.util.Iterator;
 
@@ -11,18 +11,18 @@ public class StackMaster<Item> implements Iterable<Item> {
         if (this.top == null) {
             this.top = new Node();
             this.top.setItem(item);
-            this.top.setLink(null);
+            this.top.setNext(null);
         } else {
             Node<Item> current = new Node<Item>();
             current.setItem(item);
-            current.setLink(top);
+            current.setNext(top);
             top = current;
         }
     }
 
     public Item pop() {
         Item item = top.getItem();
-        top = top.getLink();
+        top = top.getNext();
         return item;
     }
 
@@ -47,7 +47,7 @@ public class StackMaster<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             Item item = this.current.getItem();
-            this.current = this.current.getLink();
+            this.current = this.current.getNext();
             return item;
         }
 

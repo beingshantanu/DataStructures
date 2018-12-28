@@ -1,9 +1,9 @@
 package com.company.operations;
 
-import com.company.linkedList.DeletedModel;
-import com.company.linkedList.LinkedListMaster;
-import com.company.linkedList.QueueMaster;
-import com.company.linkedList.StackMaster;
+import com.company.dataStructures_linkedLists.DeletedModel;
+import com.company.dataStructures_linkedLists.LinkedListMaster;
+import com.company.dataStructures_linkedLists.QueueMaster;
+import com.company.dataStructures_linkedLists.StackMaster;
 
 import java.util.Iterator;
 import java.util.Scanner;

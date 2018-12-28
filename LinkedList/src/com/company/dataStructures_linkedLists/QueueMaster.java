@@ -1,4 +1,4 @@
-package com.company.linkedList;
+package com.company.dataStructures_linkedLists;
 
 import java.util.Iterator;
 
@@ -10,13 +10,13 @@ public class QueueMaster<Item> implements Iterable<Item> {
     public void enQueue(Item item) {
         Node<Item> current = new Node<>();
         current.setItem(item);
-        current.setLink(null);
+        current.setNext(null);
 
         if (isEmpty()) {
             this.front = current;
             this.rear = current;
         } else {
-            this.rear.setLink(current);
+            this.rear.setNext(current);
             this.rear = current;
         }
     }
@@ -26,7 +26,7 @@ public class QueueMaster<Item> implements Iterable<Item> {
 
         if (this.front != null) {
             item = this.front.getItem();
-            this.front = this.front.getLink();
+            this.front = this.front.getNext();
             if (isEmpty()) {
                 front = rear = null;
             }
@@ -59,7 +59,7 @@ public class QueueMaster<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             Item item = this.current.getItem();
-            this.current = this.current.getLink();
+            this.current = this.current.getNext();
             return item;
         }
 

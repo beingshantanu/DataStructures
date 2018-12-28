@@ -1,4 +1,4 @@
-package com.company.linkedList;
+package com.company.dataStructures_linkedLists;
 
 public class DeletedModel<Item> {
     public Item getDeletedItem() {

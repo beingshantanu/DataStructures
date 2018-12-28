@@ -1,4 +1,4 @@
-package com.company.linkedList;
+package com.company.dataStructures_linkedLists;
 
 
 import java.util.Iterator;
@@ -16,7 +16,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
             if (!this.isEmptyList()) {
                 Node<Item> node = new Node<>();
                 node.setItem(item);
-                node.setLink(this.head);
+                node.setNext(this.head);
                 this.head = node;
             } else {
                 this.head = new Node();
@@ -36,12 +36,12 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         try {
             if (!this.isEmptyList()) {
                 Node<Item> temp = this.head;
-                while (temp.getLink() != null) {
-                    temp = temp.getLink();
+                while (temp.getNext() != null) {
+                    temp = temp.getNext();
                 }
 
-                temp.setLink(new Node());
-                temp.getLink().setItem(item);
+                temp.setNext(new Node());
+                temp.getNext().setItem(item);
 
             } else {
                 this.head = new Node<>();
@@ -64,7 +64,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
                 newNode.setItem(item);
 
                 Node temp = this.head;
-                newNode.setLink(temp);
+                newNode.setNext(temp);
                 this.head = newNode;
 
             } else if (this.getSize() >= pos) {
@@ -73,10 +73,10 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
                 Node temp = this.head;
 
                 for (int index = 1; index < (pos - 1); index++) {
-                    temp = temp.getLink();
+                    temp = temp.getNext();
                 }
-                newNode.setLink(temp.getLink());
-                temp.setLink(newNode);
+                newNode.setNext(temp.getNext());
+                temp.setNext(newNode);
 
             } else {
                 isInserted = false;
@@ -94,12 +94,12 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         try {
             if (!this.isEmptyList()) {
                 Node<Item> temp = this.head;
-                while (temp.getLink().getLink() != null) {
-                    temp = temp.getLink();
+                while (temp.getNext().getNext() != null) {
+                    temp = temp.getNext();
                 }
 
-                deletedModel.setDeletedItem((Item) temp.getLink().getItem());
-                temp.setLink(null);
+                deletedModel.setDeletedItem((Item) temp.getNext().getItem());
+                temp.setNext(null);
             }
             deletedModel.setIsDeleted(true);
 
@@ -117,7 +117,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
             if (!this.isEmptyList()) {
                 Node<Item> temp = this.head;
                 deletedModel.setDeletedItem(temp.getItem());
-                temp = temp.getLink();
+                temp = temp.getNext();
                 this.head = temp;
                 deletedModel.setIsDeleted(true);
             }
@@ -141,10 +141,10 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
                 Node<Item> temp = this.head;
 
                 for (int index = 1; index < (pos - 2); index++) {
-                    temp = temp.getLink();
+                    temp = temp.getNext();
                 }
-                deletedModel.setDeletedItem((Item) temp.getLink().getItem());
-                temp.setLink(temp.getLink().getLink());
+                deletedModel.setDeletedItem((Item) temp.getNext().getItem());
+                temp.setNext(temp.getNext().getNext());
             } else {
                 deletedModel.setIsDeleted(false);
             }
@@ -163,7 +163,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
             int i = 1;
             while (temp != null) {
                 System.out.println("Data[" + (i++) + "]:" + temp.getItem());
-                temp = temp.getLink();
+                temp = temp.getNext();
             }
         }
     }
@@ -174,7 +174,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
 
         while (temp != null) {
             ++size;
-            temp = temp.getLink();
+            temp = temp.getNext();
         }
 
         return size;
@@ -209,7 +209,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             Item item = this.current.getItem();
-            this.current = this.current.getLink();
+            this.current = this.current.getNext();
             return item;
         }
 
