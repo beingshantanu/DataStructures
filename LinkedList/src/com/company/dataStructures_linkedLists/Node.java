@@ -3,6 +3,8 @@ package com.company.dataStructures_linkedLists;
 public class Node<Item> {
     private Item item;
     private Node<Item> next;
+    private Node<Item> prev;
+
 
     public Node() {
         this.next = null;
@@ -12,8 +14,16 @@ public class Node<Item> {
         return item;
     }
 
-    public Node getNext() {
+    public Node<Item> getNext() {
         return next;
+    }
+
+    public Node<Item> getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Node<Item> prev) {
+        this.prev = prev;
     }
 
     public void setItem(Item item) {
