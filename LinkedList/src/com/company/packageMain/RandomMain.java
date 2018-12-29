@@ -2,7 +2,6 @@ package com.company.packageMain;
 
 import com.company.dataStructures_arrays.RandomisedQueues;
 
-import java.util.Random;
 
 public class RandomMain {
     public static void main(String[] args) {
