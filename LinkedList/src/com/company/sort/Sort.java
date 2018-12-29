@@ -19,6 +19,23 @@ public class Sort {
         }
     }
 
+    public void selectionSort(Comparable[] arr) {
+        int len = arr.length;
+        int min = 0;
+        for (int i = 0; i <= (len - 1); i++) {
+            min = i;
+            for (int j = i + 1; j <= (len - 1); j++) {
+                if (arr[min].compareTo(arr[j]) >= 0) {
+                    min = j;
+                }
+            }
+
+            if (min != i) {
+                this.swap(arr, min, i);
+            }
+        }
+    }
+
     private int partition(int a[], int low, int high) {
         int i = low - 1;
         int pivot = a[high];
@@ -40,6 +57,12 @@ public class Sort {
      */
     private void swap(int a[], int i, int j) {
         int temp = a[j];
+        a[j] = a[i];
+        a[i] = temp;
+    }
+
+    private void swap(Comparable a[], int i, int j) {
+        Comparable temp = a[j];
         a[j] = a[i];
         a[i] = temp;
     }

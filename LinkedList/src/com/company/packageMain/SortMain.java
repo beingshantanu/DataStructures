@@ -24,13 +24,22 @@ public class SortMain {
         }
     }
 
+    public static void selectionSortDemo(Comparable []arr){
+        new Sort().selectionSort(arr);
+        System.out.println("Selection Sort Demo: ");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + "\t");
+        }
+    }
+
     public static void main(String[] args) {
-        int[] arr = {1, 3, 5, 7, 1, 4, 6};
-        // int[] arr = {1,8,9,2,5,7};
-        // int []arr = {12, 11, 13, 5, 6, 7};
-        // int []arr = {10, 7, 8, 6, 1, 9};
+        // Integer[] arr = {1, 3, 5, 7, 1, 4, 6};
+        Integer[] arr = {1,8,9,2,5,7};
+        // Integer []arr = {12, 11, 13, 5, 6, 7};
+        // Integer []arr = {10, 7, 8, 6, 1, 9};
 
         // mergeSortDemo(arr);
-         quickSortDemo(arr);
+        // quickSortDemo(arr);
+        selectionSortDemo(arr);
     }
 }
