@@ -14,7 +14,7 @@ public class SortMain {
         }
     }
 
-    public static void quickSortDemo(int []arr){
+    public static void quickSortDemo(Comparable []arr){
         int low = 0;
         int high = arr.length - 1;
         new Sort().quickSort(arr, low, high);
@@ -33,13 +33,13 @@ public class SortMain {
     }
 
     public static void main(String[] args) {
-        // Integer[] arr = {1, 3, 5, 7, 1, 4, 6};
-        Integer[] arr = {1,8,9,2,5,7};
+         Integer[] arr = {1, 3, 5, 7, 1, 4, 6};
+        // Integer[] arr = {1,8,9,2,5,7};
         // Integer []arr = {12, 11, 13, 5, 6, 7};
         // Integer []arr = {10, 7, 8, 6, 1, 9};
 
         // mergeSortDemo(arr);
-        // quickSortDemo(arr);
-        selectionSortDemo(arr);
+        //quickSortDemo(arr);
+         selectionSortDemo(arr);
     }
 }

@@ -1,5 +1,9 @@
 package com.company.sort;
 
+import com.company.util.Utility;
+
+import java.util.Comparator;
+
 public class Sort {
 
     public void mergeSort(int a[], int low, int high) {
@@ -11,7 +15,7 @@ public class Sort {
         }
     }
 
-    public void quickSort(int a[], int low, int high) {
+    public void quickSort(Comparable a[], int low, int high) {
         if (low < high) {
             int pivotPos = partition(a, low, high);
             quickSort(a, low, pivotPos - 1);
@@ -21,50 +25,35 @@ public class Sort {
 
     public void selectionSort(Comparable[] arr) {
         int len = arr.length;
-        int min = 0;
+        int min;
         for (int i = 0; i <= (len - 1); i++) {
             min = i;
             for (int j = i + 1; j <= (len - 1); j++) {
-                if (arr[min].compareTo(arr[j]) >= 0) {
+                if (Utility.less(arr[j], arr[min])) {
                     min = j;
                 }
             }
 
             if (min != i) {
-                this.swap(arr, min, i);
+                Utility.swap(arr, min, i);
             }
         }
     }
 
-    private int partition(int a[], int low, int high) {
+    private int partition(Comparable a[], int low, int high) {
         int i = low - 1;
-        int pivot = a[high];
+        Comparable pivot = a[high];
 
         for (int j = low; j < high; j++) {
-            if (a[j] <= pivot) {
+            if (a[j].compareTo(pivot) <= 0) {
                 i++;
-                swap(a, i, j);
+                Utility.swap(a, i, j);
             }
         }
 
-        swap(a, i + 1, high);
+        Utility.swap(a, i + 1, high);
 
         return i + 1;
-    }
-
-    /*
-        swap a[i] and a[j]
-     */
-    private void swap(int a[], int i, int j) {
-        int temp = a[j];
-        a[j] = a[i];
-        a[i] = temp;
-    }
-
-    private void swap(Comparable a[], int i, int j) {
-        Comparable temp = a[j];
-        a[j] = a[i];
-        a[i] = temp;
     }
 
     private void merge(int[] arr, int low, int mid, int high) {
