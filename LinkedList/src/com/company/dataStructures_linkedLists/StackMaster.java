@@ -5,9 +5,8 @@ import java.util.Iterator;
 public class StackMaster<Item> implements Iterable<Item> {
 
     private Node<Item> top;
-
+    private int size_of_stack = 0;
     public void push(Item item) {
-        boolean isPushed = false;
         if (this.top == null) {
             this.top = new Node();
             this.top.setItem(item);
@@ -18,12 +17,18 @@ public class StackMaster<Item> implements Iterable<Item> {
             current.setNext(top);
             top = current;
         }
+        ++size_of_stack;
     }
 
     public Item pop() {
         Item item = top.getItem();
         top = top.getNext();
+        --size_of_stack;
         return item;
+    }
+
+    public int getSize_of_stack(){
+        return size_of_stack;
     }
 
     @Override

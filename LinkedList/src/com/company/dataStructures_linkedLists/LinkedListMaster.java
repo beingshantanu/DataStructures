@@ -3,23 +3,27 @@ package com.company.dataStructures_linkedLists;
 
 import java.util.Iterator;
 
-public class LinkedListMaster<Item> implements Iterable<Item> {
-    private Node<Item> head;
+public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable<Item> {
+    private SingleLinkedListNode<Item> head;
 
     public LinkedListMaster() {
         this.head = null;
+    }
+
+    public SingleLinkedListNode<Item> getHead() {
+        return this.head;
     }
 
     public boolean insertItemAtStart(Item item) {
         boolean isInserted = false;
         try {
             if (!this.isEmptyList()) {
-                Node<Item> node = new Node<>();
+                SingleLinkedListNode<Item> node = new SingleLinkedListNode<>();
                 node.setItem(item);
                 node.setNext(this.head);
                 this.head = node;
             } else {
-                this.head = new Node();
+                this.head = new SingleLinkedListNode();
                 this.head.setItem(item);
             }
             isInserted = true;
@@ -35,16 +39,16 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         boolean isInserted = false;
         try {
             if (!this.isEmptyList()) {
-                Node<Item> temp = this.head;
+                SingleLinkedListNode<Item> temp = this.head;
                 while (temp.getNext() != null) {
                     temp = temp.getNext();
                 }
 
-                temp.setNext(new Node());
+                temp.setNext(new SingleLinkedListNode());
                 temp.getNext().setItem(item);
 
             } else {
-                this.head = new Node<>();
+                this.head = new SingleLinkedListNode<>();
                 this.head.setItem(item);
             }
             isInserted = true;
@@ -60,17 +64,17 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         boolean isInserted = true;
         try {
             if (pos == 1) {
-                Node<Item> newNode = new Node<>();
+                SingleLinkedListNode<Item> newNode = new SingleLinkedListNode<>();
                 newNode.setItem(item);
 
-                Node temp = this.head;
+                SingleLinkedListNode temp = this.head;
                 newNode.setNext(temp);
                 this.head = newNode;
 
             } else if (this.getSize() >= pos) {
-                Node<Item> newNode = new Node<>();
+                SingleLinkedListNode<Item> newNode = new SingleLinkedListNode<>();
                 newNode.setItem(item);
-                Node temp = this.head;
+                SingleLinkedListNode temp = this.head;
 
                 for (int index = 1; index < (pos - 1); index++) {
                     temp = temp.getNext();
@@ -93,7 +97,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         deletedModel.setIsDeleted(false);
         try {
             if (!this.isEmptyList()) {
-                Node<Item> temp = this.head;
+                SingleLinkedListNode<Item> temp = this.head;
                 while (temp.getNext().getNext() != null) {
                     temp = temp.getNext();
                 }
@@ -115,7 +119,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         deletedModel.setIsDeleted(false);
         try {
             if (!this.isEmptyList()) {
-                Node<Item> temp = this.head;
+                SingleLinkedListNode<Item> temp = this.head;
                 deletedModel.setDeletedItem(temp.getItem());
                 temp = temp.getNext();
                 this.head = temp;
@@ -138,7 +142,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
                         .getDeletedItem());
 
             } else if (this.getSize() >= pos) {
-                Node<Item> temp = this.head;
+                SingleLinkedListNode<Item> temp = this.head;
 
                 for (int index = 1; index < (pos - 2); index++) {
                     temp = temp.getNext();
@@ -156,7 +160,7 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
     }
 
     public void printList() {
-        Node<Item> temp = this.head;
+        SingleLinkedListNode<Item> temp = this.head;
         if (this.isEmptyList()) {
             System.out.println("List is Empty");
         } else {
@@ -168,9 +172,25 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         }
     }
 
+    public void reverseLinkList() {
+        SingleLinkedListNode<Item> cur = this.head;
+        SingleLinkedListNode<Item> prev;
+        SingleLinkedListNode<Item> nxt = cur.getNext();
+        do {
+            prev = cur;
+            cur = nxt;
+            nxt = cur.getNext();
+            cur.setNext(prev);
+
+        } while (nxt != null);
+
+        this.head.setNext(null);
+        this.head = cur;
+    }
+
     public int getSize() {
         int size = 0;
-        Node<Item> temp = this.head;
+        SingleLinkedListNode<Item> temp = this.head;
 
         while (temp != null) {
             ++size;
@@ -178,6 +198,49 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
         }
 
         return size;
+    }
+
+    public SingleLinkedListNode<Item> appendList(SingleLinkedListNode<Item> head1,
+                                                 SingleLinkedListNode<Item> head2) {
+        SingleLinkedListNode<Item> cur = head1;
+        while (cur.getNext() != null) {
+            cur = cur.getNext();
+        }
+        cur.setNext(head2);
+        return head1;
+    }
+
+    public Item findMergePoint(SingleLinkedListNode<Item> head1,
+                               SingleLinkedListNode<Item> head2) {
+        Item item = null;
+        SingleLinkedListNode<Item> cur1 = head1;
+        SingleLinkedListNode<Item> cur2 = head2;
+
+        while (cur1 != null) {
+             item = cur1.getItem();
+            while (cur2 != null) {
+                if (cur2.getItem().compareTo(cur1.getItem()) == 0) {
+                    while (cur2 != null) {
+                        cur2 = cur2.getNext();
+                        cur1 = cur1.getNext();
+                        if (cur1.getItem().compareTo(cur2.getItem()) != 0) {
+                            break;
+                        }
+                    }
+                }
+
+                if (cur2 == null) {
+                    break;
+                }
+                cur2 = cur2.getNext();
+            }
+            if (cur1 == null) {
+                break;
+            }
+            cur1 = cur1.getNext();
+            cur2 = head2;
+        }
+        return item;
     }
 
     private boolean isEmptyList() {
@@ -195,9 +258,9 @@ public class LinkedListMaster<Item> implements Iterable<Item> {
 
     private class LinkedListMasterIterator implements Iterator<Item> {
 
-        private Node<Item> current;
+        private SingleLinkedListNode<Item> current;
 
-        public LinkedListMasterIterator(Node<Item> head) {
+        public LinkedListMasterIterator(SingleLinkedListNode<Item> head) {
             this.current = head;
         }
 

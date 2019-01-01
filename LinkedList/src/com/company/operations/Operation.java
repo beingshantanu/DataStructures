@@ -1,9 +1,6 @@
 package com.company.operations;
 
-import com.company.dataStructures_linkedLists.DeletedModel;
-import com.company.dataStructures_linkedLists.LinkedListMaster;
-import com.company.dataStructures_linkedLists.QueueMaster;
-import com.company.dataStructures_linkedLists.StackMaster;
+import com.company.dataStructures_linkedLists.*;
 
 import java.util.Iterator;
 import java.util.Scanner;
@@ -19,9 +16,11 @@ public class Operation {
         System.out.println("5. Delete at the End");
         System.out.println("6. Delete at the Specific Position");
         System.out.println("7. Print LinkedList");
-        System.out.println("8. End");
+        System.out.println("8. Reverse a Linked List");
+        System.out.println("9. Find Merge Point");
+        System.out.println("10. End");
 
-        LinkedListMaster<Float> linkedList = new LinkedListMaster<>();
+        LinkedListMaster<Double> linkedList = new LinkedListMaster<>();
         Scanner scan = new Scanner(System.in);
         int choice;
         do {
@@ -30,7 +29,7 @@ public class Operation {
             switch (choice) {
                 case 1: {
                     System.out.println("Enter Item to Insert at the Start:");
-                    float item = scan.nextFloat();
+                    double item = scan.nextDouble();
                     boolean isInserted = linkedList.insertItemAtStart(item);
                     if (isInserted) {
                         System.out.println("Item inserted at the start: " + item);
@@ -41,7 +40,7 @@ public class Operation {
                 }
                 case 2: {
                     System.out.println("Enter Item to Insert at the End:");
-                    float item = scan.nextFloat();
+                    double item = scan.nextDouble();
                     boolean isInserted = linkedList.insertItemAtEnd(item);
                     if (isInserted) {
                         System.out.println("Item inserted at the End: " + item);
@@ -52,7 +51,7 @@ public class Operation {
                 }
                 case 3: {
                     System.out.println("Enter Item to Insert:");
-                    float item = scan.nextFloat();
+                    double item = scan.nextDouble();
                     System.out.println("Enter position to Insert:");
                     int pos = scan.nextInt();
 
@@ -107,7 +106,7 @@ public class Operation {
                     break;
                 }
                 case 7: {
-                    Iterator<Float> it = linkedList.iterator();
+                    Iterator<Double> it = linkedList.iterator();
                     int i = 0;
                     System.out.println("All Elements in the List:");
                     while (it.hasNext()) {
@@ -115,9 +114,52 @@ public class Operation {
                     }
                     break;
                 }
+                case 8:{
+                    linkedList.reverseLinkList();
+                    Iterator<Double> it = linkedList.iterator();
+                    int i = 0;
+                    System.out.println("All Elements in the List:");
+                    while (it.hasNext()) {
+                        System.out.println("Data[" + (i++) + "]:" + it.next());
+                    }
+                    break;
+                }
+                case 9:{
+                    LinkedListMaster<Integer> ll1 = new LinkedListMaster<>();
+                    ll1.insertItemAtEnd(1);
+                    ll1.insertItemAtEnd(2);
+                    ll1.insertItemAtEnd(17);
+                    SingleLinkedListNode<Integer> head1 = ll1.getHead();
+
+                    LinkedListMaster<Integer> llCommon = new LinkedListMaster<>();
+                    llCommon.insertItemAtEnd(2);
+                    llCommon.insertItemAtEnd(5);
+                    llCommon.insertItemAtEnd(9);
+
+                    SingleLinkedListNode<Integer> headCommon = llCommon.getHead();
+                    LinkedListMaster<Integer> llFirst = new LinkedListMaster<>();
+                    SingleLinkedListNode<Integer> headFirst =
+                            llFirst.appendList(head1, headCommon);
+
+                    LinkedListMaster<Integer> ll2 = new LinkedListMaster<>();
+                    ll2.insertItemAtEnd(7);
+                    ll2.insertItemAtEnd(2);
+                    ll2.insertItemAtEnd(3);
+                    SingleLinkedListNode<Integer> head2 = ll2.getHead();
+
+                    LinkedListMaster<Integer> llSecond = new LinkedListMaster<>();
+                    SingleLinkedListNode<Integer> headSecond =
+                            llSecond.appendList(head2, headCommon);
+
+                    LinkedListMaster<Integer> llMerge = new LinkedListMaster<>();
+
+                    Integer i = llMerge.findMergePoint(head1, head2);
+                    System.out.println("Merge point: "+ i.intValue());
+                    break;
+                }
             }
 
-        } while (choice != 8);
+        } while (choice != 10);
         System.out.println("Linked List execution ended");
     }
 

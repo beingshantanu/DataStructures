@@ -27,19 +27,21 @@ public class HeapDS<T extends Comparable<T>> implements Iterable<T> {
             throw new ArrayIndexOutOfBoundsException("Max size limit of heap exceeds.");
         }
         this.heap[heap_size++] = key;
-        this.swim();
+        int cur_index = this.heap_size - 1;
+        this.swim(cur_index);
     }
 
     public T deleteFromHeap(){
         if (this.heap_size == 0) {
-            throw new java.util.NoSuchElementException("Queue is Empty");
+            throw new java.util.NoSuchElementException("Heap is Empty");
         }
 
         T item = heap[0];
         heap[0] = heap[this.getHeap_size() - 1];
         heap[this.getHeap_size() - 1] = null;
         --heap_size;
-        this.sink();
+        int cur_index = 0;
+        this.sink(cur_index);
         return item;
     }
 
@@ -74,8 +76,7 @@ public class HeapDS<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
-    private void swim() {
-        int cur_index = this.heap_size - 1;
+    private void swim(int cur_index) {
         int parent_index;
 
         while (cur_index != 0) {
@@ -89,8 +90,7 @@ public class HeapDS<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
-    private void sink() {
-        int cur_index = 0;
+    private void sink(int cur_index) {
         while (cur_index != (this.heap_size - 1)) {
             int max_index = cur_index;
             int left_index = this.getLeftChild(cur_index);
