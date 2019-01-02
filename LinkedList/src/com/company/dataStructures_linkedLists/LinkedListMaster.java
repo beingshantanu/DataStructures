@@ -1,5 +1,6 @@
 package com.company.dataStructures_linkedLists;
 
+import com.company.util.Utility;
 
 import java.util.Iterator;
 
@@ -71,7 +72,7 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
                 newNode.setNext(temp);
                 this.head = newNode;
 
-            } else if (this.getSize() >= pos) {
+            } else if (this.getSize(this.head) >= pos) {
                 SingleLinkedListNode<Item> newNode = new SingleLinkedListNode<>();
                 newNode.setItem(item);
                 SingleLinkedListNode temp = this.head;
@@ -141,7 +142,7 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
                 deletedModel.setDeletedItem(this.deleteItemAtStart()
                         .getDeletedItem());
 
-            } else if (this.getSize() >= pos) {
+            } else if (this.getSize(this.head) >= pos) {
                 SingleLinkedListNode<Item> temp = this.head;
 
                 for (int index = 1; index < (pos - 2); index++) {
@@ -188,9 +189,9 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         this.head = cur;
     }
 
-    public int getSize() {
+    public int getSize(SingleLinkedListNode<Item> listHead) {
         int size = 0;
-        SingleLinkedListNode<Item> temp = this.head;
+        SingleLinkedListNode<Item> temp = listHead;
 
         while (temp != null) {
             ++size;
@@ -210,37 +211,98 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         return head1;
     }
 
-    public Item findMergePoint(SingleLinkedListNode<Item> head1,
-                               SingleLinkedListNode<Item> head2) {
-        Item item = null;
-        SingleLinkedListNode<Item> cur1 = head1;
-        SingleLinkedListNode<Item> cur2 = head2;
+    public SingleLinkedListNode<Item> findMergePoint(SingleLinkedListNode<Item> head1,
+                                                     SingleLinkedListNode<Item> head2) {
+        int size_of_first_list = this.getSize(head1);
+        int size_of_second_list = this.getSize(head2);
+        SingleLinkedListNode<Item> cur_first = head1, cur_second = head2;
 
-        while (cur1 != null) {
-             item = cur1.getItem();
-            while (cur2 != null) {
-                if (cur2.getItem().compareTo(cur1.getItem()) == 0) {
-                    while (cur2 != null) {
-                        cur2 = cur2.getNext();
-                        cur1 = cur1.getNext();
-                        if (cur1.getItem().compareTo(cur2.getItem()) != 0) {
-                            break;
-                        }
-                    }
-                }
-
-                if (cur2 == null) {
-                    break;
-                }
-                cur2 = cur2.getNext();
+        int diff_size = (size_of_first_list - size_of_second_list);
+        if (diff_size >= 0) {
+            while ((diff_size--) > 0) {
+                cur_first = cur_first.getNext();
             }
-            if (cur1 == null) {
+        } else {
+            while ((diff_size++) > 0) {
+                cur_second = cur_second.getNext();
+            }
+        }
+        while (cur_first != null) {
+            if (cur_first == cur_second) {
                 break;
             }
-            cur1 = cur1.getNext();
-            cur2 = head2;
+            cur_first = cur_first.getNext();
+            cur_second = cur_second.getNext();
         }
-        return item;
+
+        return cur_first;
+    }
+
+    public SingleLinkedListNode<Item> mergeSortedLists(
+            SingleLinkedListNode<Item> head1,
+            SingleLinkedListNode<Item> head2) {
+        if (head1 == null || head2 == null) {
+            throw new IllegalArgumentException("Input Lists can not be empty.");
+        }
+
+        SingleLinkedListNode<Item> res = null;
+        SingleLinkedListNode<Item> cur = null;
+        if (Utility.less(head1.getItem(), head2.getItem())) {
+            res = head1;
+            head1 = head1.getNext();
+        } else {
+            res = head2;
+            head2 = head2.getNext();
+        }
+        cur = res;
+        while (true) {
+            if (head1 == null || head2 == null) {
+                break;
+            }
+            if (Utility.less(head1.getItem(), head2.getItem())) {
+                cur.setNext(head1);
+                head1 = head1.getNext();
+            } else {
+                cur.setNext(head2);
+                head2 = head2.getNext();
+            }
+            cur = cur.getNext();
+        }
+
+        if (head2 == null) {
+            cur.setNext(head1);
+        } else if (head1 == null) {
+            cur.setNext(head2);
+        }
+        this.head = res;
+        return res;
+    }
+
+    public boolean isLoopPresent(SingleLinkedListNode<Item> lHead) {
+        if (lHead == null) {
+            throw new IllegalArgumentException("List is Empty");
+        }
+        SingleLinkedListNode<Item> slow = lHead;
+        SingleLinkedListNode<Item> fast = lHead.getNext();
+        boolean isPresent = false;
+        while (true) {
+            if (fast == slow) {
+                isPresent = true;
+                break;
+            }
+            if (fast == null) {
+                break;
+            }
+            if (fast.getNext() == null) {
+                break;
+            }
+            if (slow == null) {
+                break;
+            }
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        return isPresent;
     }
 
     private boolean isEmptyList() {

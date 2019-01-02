@@ -18,7 +18,9 @@ public class Operation {
         System.out.println("7. Print LinkedList");
         System.out.println("8. Reverse a Linked List");
         System.out.println("9. Find Merge Point");
-        System.out.println("10. End");
+        System.out.println("10. Is Cycle Present?");
+        System.out.println("11. Merge two sorted lists");
+        System.out.println("12. End");
 
         LinkedListMaster<Double> linkedList = new LinkedListMaster<>();
         Scanner scan = new Scanner(System.in);
@@ -59,8 +61,6 @@ public class Operation {
                     if (isInserted) {
                         System.out.println("Item inserted: " + item);
                     } else {
-                        System.out.println("The size of the Linked List: " +
-                                linkedList.getSize());
                         System.out.println("Position is greater than size of the list");
                     }
                     System.out.println("Current List Items:");
@@ -114,7 +114,7 @@ public class Operation {
                     }
                     break;
                 }
-                case 8:{
+                case 8: {
                     linkedList.reverseLinkList();
                     Iterator<Double> it = linkedList.iterator();
                     int i = 0;
@@ -124,17 +124,18 @@ public class Operation {
                     }
                     break;
                 }
-                case 9:{
+                case 9: {
                     LinkedListMaster<Integer> ll1 = new LinkedListMaster<>();
-                    ll1.insertItemAtEnd(1);
-                    ll1.insertItemAtEnd(2);
-                    ll1.insertItemAtEnd(17);
+                    ll1.insertItemAtEnd(3);
+                    ll1.insertItemAtEnd(6);
+                    ll1.insertItemAtEnd(15);
+
                     SingleLinkedListNode<Integer> head1 = ll1.getHead();
 
                     LinkedListMaster<Integer> llCommon = new LinkedListMaster<>();
-                    llCommon.insertItemAtEnd(2);
-                    llCommon.insertItemAtEnd(5);
-                    llCommon.insertItemAtEnd(9);
+                    //llCommon.insertItemAtEnd(2);
+                    llCommon.insertItemAtEnd(15);
+                    llCommon.insertItemAtEnd(30);
 
                     SingleLinkedListNode<Integer> headCommon = llCommon.getHead();
                     LinkedListMaster<Integer> llFirst = new LinkedListMaster<>();
@@ -142,9 +143,9 @@ public class Operation {
                             llFirst.appendList(head1, headCommon);
 
                     LinkedListMaster<Integer> ll2 = new LinkedListMaster<>();
-                    ll2.insertItemAtEnd(7);
-                    ll2.insertItemAtEnd(2);
-                    ll2.insertItemAtEnd(3);
+                    //ll2.insertItemAtEnd(7);
+                    //ll2.insertItemAtEnd(2);
+                    ll2.insertItemAtEnd(10);
                     SingleLinkedListNode<Integer> head2 = ll2.getHead();
 
                     LinkedListMaster<Integer> llSecond = new LinkedListMaster<>();
@@ -152,14 +153,76 @@ public class Operation {
                             llSecond.appendList(head2, headCommon);
 
                     LinkedListMaster<Integer> llMerge = new LinkedListMaster<>();
-
-                    Integer i = llMerge.findMergePoint(head1, head2);
-                    System.out.println("Merge point: "+ i.intValue());
+                    SingleLinkedListNode<Integer> node =
+                            llMerge.findMergePoint(headFirst, headSecond);
+                    if (node != null) {
+                        System.out.println("Merge point: ");
+                        System.out.println("Key: " + node.getItem() +
+                                " || Address: " + node.getNext());
+                    } else {
+                        System.out.println("Merge point does not present");
+                    }
                     break;
                 }
+                case 10: {
+                    SingleLinkedListNode<Integer> head = new SingleLinkedListNode<>();
+                    head.setItem(1);
+                    SingleLinkedListNode<Integer> cur1 = new SingleLinkedListNode<>();
+                    cur1.setItem(2);
+                    head.setNext(cur1);
+                    SingleLinkedListNode<Integer> cur2 = new SingleLinkedListNode<>();
+                    cur2.setItem(3);
+                    cur1.setNext(cur2);
+                    SingleLinkedListNode<Integer> cur3 = new SingleLinkedListNode<>();
+                    cur3.setItem(4);
+                    cur2.setNext(cur3);
+                    SingleLinkedListNode<Integer> cur4 = new SingleLinkedListNode<>();
+                    cur4.setItem(5);
+                    cur3.setNext(cur4);
+                    SingleLinkedListNode<Integer> cur5 = new SingleLinkedListNode<>();
+                    cur5.setItem(6);
+                    cur4.setNext(cur5);
+                    SingleLinkedListNode<Integer> cur6 = new SingleLinkedListNode<>();
+                    cur6.setItem(7);
+                    cur5.setNext(cur6);
+                    cur6.setNext(cur2);
+
+                    System.out.println("Is Cycle Present?: " +
+                            new LinkedListMaster<Integer>().isLoopPresent(head));
+                }
+
+                case 11: {
+                    LinkedListMaster<Integer> ll1 = new LinkedListMaster<>();
+//                    ll1.insertItemAtEnd(1);
+//                    ll1.insertItemAtEnd(2);
+//                    ll1.insertItemAtEnd(13);
+//                    ll1.insertItemAtEnd(14);
+                    ll1.insertItemAtEnd(5);
+                    ll1.insertItemAtEnd(10);
+                    ll1.insertItemAtEnd(15);
+                    LinkedListMaster<Integer> ll2 = new LinkedListMaster<>();
+//                    ll2.insertItemAtEnd(1);
+//                    ll2.insertItemAtEnd(5);
+//                    ll2.insertItemAtEnd(6);
+//                    ll2.insertItemAtEnd(8);
+                    ll2.insertItemAtEnd(2);
+                    ll2.insertItemAtEnd(3);
+                    ll2.insertItemAtEnd(20);
+
+
+                    LinkedListMaster<Integer> ll = new LinkedListMaster<>();
+                    SingleLinkedListNode<Integer> node =
+                            ll.mergeSortedLists(ll1.getHead(),
+                                    ll2.getHead());
+                    System.out.println("After Merge:");
+                    for (Integer i : ll) {
+                        System.out.println(i.intValue());
+                    }
+                }
+
             }
 
-        } while (choice != 10);
+        } while (choice != 12);
         System.out.println("Linked List execution ended");
     }
 
@@ -242,7 +305,7 @@ public class Operation {
     public Double evaluateArithMaticExpression(String expr) {
         // ((1*2)+3)
         Double exprValue = null;
-        if(expr.startsWith("(") && expr.endsWith(")")) {
+        if (expr.startsWith("(") && expr.endsWith(")")) {
             StackMaster<Character> operatorStack = new StackMaster<Character>();
             StackMaster<Double> operandStack = new StackMaster<Double>();
             char[] c = expr.toCharArray();
@@ -281,5 +344,3 @@ public class Operation {
         return exprValue;
     }
 }
-
-
