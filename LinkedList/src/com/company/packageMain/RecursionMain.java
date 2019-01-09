@@ -3,22 +3,13 @@ package com.company.packageMain;
 public class RecursionMain {
     static int l = 0;
     static int multiplier = 10;
-    static int digit = 0;
-    static int aLength = 0;
+    static int max = 0;
 
     static int fact(int n) {
         if (n == 1)
             return 1;
         else
             return n * fact(n - 1);
-    }
-
-    static int sum(int n) {
-        if (n == 1) {
-            return 1;
-        } else {
-            return n + sum(n - 1);
-        }
     }
 
     static int numRev(int n) {
@@ -33,19 +24,27 @@ public class RecursionMain {
         }
     }
 
-    static int digitCal(int n) {
-        if (n > 10) {
-            digitCal(n / 10);
+    static void printArr(int[] a, int i) {
+        if (i < a.length) {
+            System.out.println(a[i]);
+            printArr(a, ++i);
         }
-        return ++digit;
-
     }
 
-
-
+    static void findMax(int[] a, int i) {
+        if (i < a.length) {
+            if (a[i] >= max) {
+                max = a[i];
+            }
+            findMax(a, ++i);
+        }
+    }
 
     public static void main(String[] args) {
-        int[] a = {1,2,5,3};
-        //System.out.println(max(a));
+        int[] a = {1, 4, 5, 56, 7, 45};
+//        printArr(a, 0);
+        max = a[0];
+        findMax(a, 0);
+        System.out.println(max);
     }
 }
