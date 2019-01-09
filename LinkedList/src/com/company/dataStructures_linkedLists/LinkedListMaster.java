@@ -1,6 +1,5 @@
 package com.company.dataStructures_linkedLists;
 
-import com.company.util.Utility;
 
 import java.util.Iterator;
 
@@ -173,6 +172,15 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         }
     }
 
+    public void printListRec(SingleLinkedListNode<Item> node) {
+        if (node == null) {
+            return;
+        } else {
+            System.out.println(node.getItem());
+            printListRec(node.getNext());
+        }
+    }
+
     public void reverseLinkList() {
         SingleLinkedListNode<Item> cur = this.head;
         SingleLinkedListNode<Item> prev;
@@ -187,6 +195,23 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
 
         this.head.setNext(null);
         this.head = cur;
+    }
+
+    public void reverseLinkListRec(SingleLinkedListNode<Item> node) {
+        if (node == null) {
+            return;
+        }
+        SingleLinkedListNode<Item> next, current;
+        current = node;
+        next = node.getNext();
+        reverseLinkListRec(next);
+        if (next == null) {
+            this.head.setNext(null);
+            this.head = current;
+            return;
+        } else {
+            next.setNext(current);
+        }
     }
 
     public int getSize(SingleLinkedListNode<Item> listHead) {
@@ -209,6 +234,44 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         }
         cur.setNext(head2);
         return head1;
+    }
+
+    public Item getNodeFromTail(SingleLinkedListNode<Item> head, int positionFromTail) {
+        SingleLinkedListNode<Item> head1 = head, temp;
+        Item data;
+        while (true) {
+            temp = head1;
+            for (int i = 1; i <= positionFromTail; i++) {
+                temp = temp.getNext();
+            }
+            if (temp.getNext() == null) {
+                data = head1.getItem();
+                break;
+            } else {
+                head1 = head1.getNext();
+            }
+        }
+
+        return data;
+    }
+
+    public Item getNodeFromTailWithStack(SingleLinkedListNode<Item> head1, int pos) {
+        SingleLinkedListNode<Item> node = null;
+        StackMaster<SingleLinkedListNode> stackMaster = new StackMaster<>();
+        while (head1.getNext() != null) {
+            stackMaster.push(head1);
+            head1 = head1.getNext();
+        }
+
+        while (true) {
+            node = stackMaster.pop();
+            --pos;
+            if (pos == 0) {
+                break;
+            }
+        }
+
+        return node.getItem();
     }
 
     public SingleLinkedListNode<Item> findMergePoint(SingleLinkedListNode<Item> head1,
@@ -236,46 +299,6 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         }
 
         return cur_first;
-    }
-
-    public SingleLinkedListNode<Item> mergeSortedLists(
-            SingleLinkedListNode<Item> head1,
-            SingleLinkedListNode<Item> head2) {
-        if (head1 == null || head2 == null) {
-            throw new IllegalArgumentException("Input Lists can not be empty.");
-        }
-
-        SingleLinkedListNode<Item> res = null;
-        SingleLinkedListNode<Item> cur = null;
-        if (Utility.less(head1.getItem(), head2.getItem())) {
-            res = head1;
-            head1 = head1.getNext();
-        } else {
-            res = head2;
-            head2 = head2.getNext();
-        }
-        cur = res;
-        while (true) {
-            if (head1 == null || head2 == null) {
-                break;
-            }
-            if (Utility.less(head1.getItem(), head2.getItem())) {
-                cur.setNext(head1);
-                head1 = head1.getNext();
-            } else {
-                cur.setNext(head2);
-                head2 = head2.getNext();
-            }
-            cur = cur.getNext();
-        }
-
-        if (head2 == null) {
-            cur.setNext(head1);
-        } else if (head1 == null) {
-            cur.setNext(head2);
-        }
-        this.head = res;
-        return res;
     }
 
     public boolean isLoopPresent(SingleLinkedListNode<Item> lHead) {
