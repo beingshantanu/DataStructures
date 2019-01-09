@@ -1,6 +1,8 @@
 package com.company.dataStructures_linkedLists;
 
 
+import com.company.CustomException.BlankException;
+
 import java.util.Iterator;
 
 public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable<Item> {
@@ -255,6 +257,19 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         return data;
     }
 
+    public Item getNodeFromTailRec(SingleLinkedListNode<Item> head,
+                                   int positionFromTail) {
+        SingleLinkedListNode<Item> temp = head;
+        for (int i = 1; i <= positionFromTail; i++) {
+            head = head.getNext();
+        }
+        if (head.getNext() == null) {
+            return temp.getItem();
+        } else {
+            return getNodeFromTailRec(temp.getNext(), positionFromTail);
+        }
+    }
+
     public Item getNodeFromTailWithStack(SingleLinkedListNode<Item> head1, int pos) {
         SingleLinkedListNode<Item> node = null;
         StackMaster<SingleLinkedListNode> stackMaster = new StackMaster<>();
@@ -272,6 +287,27 @@ public class LinkedListMaster<Item extends Comparable<Item>> implements Iterable
         }
 
         return node.getItem();
+    }
+
+    public void removeSortedDuplicate(SingleLinkedListNode<Item> node)
+            throws BlankException {
+        if (node == null) {
+            throw new BlankException("Node can not be empty");
+        }
+        SingleLinkedListNode<Item> headTemp = node, temp;
+        while (headTemp != null) {
+            temp = headTemp;
+            Item item = headTemp.getItem();
+            if (headTemp.getNext() != null &&
+                    headTemp.getNext().getItem().compareTo(item) == 0) {
+                while (headTemp.getNext() != null &&
+                        headTemp.getNext().getItem() == item) {
+                    headTemp = headTemp.getNext();
+                }
+                temp.setNext(headTemp.getNext());
+            }
+            headTemp = headTemp.getNext();
+        }
     }
 
     public SingleLinkedListNode<Item> findMergePoint(SingleLinkedListNode<Item> head1,

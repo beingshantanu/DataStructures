@@ -1,11 +1,13 @@
 package com.company.packageMain;
 
+import com.company.CustomException.BlankException;
 import com.company.dataStructures_linkedLists.LinkedListMaster;
 import com.company.operations.Operation;
+
 import java.util.Scanner;
 
 public class Main {
-    static void callOp(){
+    static void callOp() {
         System.out.println("---> Menu <---");
         System.out.println("1. Linked List Operations");
         System.out.println("2. Stack Operations");
@@ -36,19 +38,24 @@ public class Main {
         System.out.println("Program Ended");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BlankException {
         // callOp();
 
         LinkedListMaster<Integer> lm = new LinkedListMaster<>();
-        lm.insertItemAtEnd(3);
-
-        lm.insertItemAtEnd(2);
         lm.insertItemAtEnd(1);
+        lm.insertItemAtEnd(1);
+        lm.insertItemAtEnd(2);
+        lm.insertItemAtEnd(2);
+        lm.insertItemAtEnd(2);
+        lm.insertItemAtEnd(3);
+        lm.insertItemAtEnd(3);
+        lm.insertItemAtEnd(4);
         lm.insertItemAtEnd(4);
         lm.insertItemAtEnd(5);
-        lm.insertItemAtEnd(15);
-        lm.insertItemAtEnd(16);
+        lm.removeSortedDuplicate(lm.getHead());
+        for (Integer i : lm) {
+            System.out.println(i.intValue());
+        }
 
-        System.out.println(lm.getNodeFromTail(lm.getHead(), 4));
     }
 }

@@ -211,9 +211,9 @@ public class Operation {
 
 
                     LinkedListMaster<Integer> ll = new LinkedListMaster<>();
-                    SingleLinkedListNode<Integer> node =
-                            ll.mergeSortedLists(ll1.getHead(),
-                                    ll2.getHead());
+//                    SingleLinkedListNode<Integer> node =
+//                            ll.mergeSortedLists(ll1.getHead(),
+//                                    ll2.getHead());
                     System.out.println("After Merge:");
                     for (Integer i : ll) {
                         System.out.println(i.intValue());
