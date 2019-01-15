@@ -2,13 +2,17 @@ package com.company.dataStructures_trees;
 
 import com.company.CustomException.BlankException;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.security.KeyPair;
+import java.util.*;
 
 public class TreeMaster<Key extends Comparable<Key>, Val>
         implements Iterable<Key> {
     private TreeNode head;
+    private Key minKey;
+
+    public Key getMinKey() {
+        return minKey;
+    }
 
     public TreeNode getHead() {
         return head;
@@ -31,10 +35,11 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
 
     public void deleteNode(TreeNode<Key, Val> head, Key key)
             throws BlankException {
-        this.delete(head, key);
+        this.head = this.delete(head, key);
     }
 
-    private TreeNode<Key, Val> delete(TreeNode<Key, Val> head, Key key) {
+    private TreeNode<Key, Val> delete(TreeNode<Key, Val> head, Key key)
+            throws BlankException {
         int comparable = key.compareTo(head.getKey());
         if (comparable > 0) {
             head.setRight(delete(head.getRight(), key));
@@ -43,7 +48,27 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
         } else if (comparable == 0) {
             if (head.getLeft() == null && head.getRight() == null) {
                 head = null;
+            } else if (head.getLeft() != null && head.getRight() != null) {
+                TreeNode<Key, Val> right_min = findMin(head.getRight());
+                head.setKey(right_min.getKey());
+                delete(head.getRight(),right_min.getKey());
+            } else if (head.getLeft() != null || head.getRight() != null) {
+                head = (head.getLeft() != null) ? head.getLeft() : head.getRight();
             }
+        }
+        return head;
+    }
+
+    public TreeNode<Key, Val> findMin(TreeNode<Key, Val> head)
+            throws BlankException {
+        if (head == null) {
+            throw new BlankException("Key is not present in the tree");
+        }
+        if (head.getLeft() != null) {
+            findMin(head.getLeft());
+        } else if (head.getLeft() == null) {
+            System.out.println("Min: " + head.getKey());
+            head = null;
         }
         return head;
     }
@@ -68,7 +93,8 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
         return head;
     }
 
-    private TreeNode<Key, Val> searchTree(TreeNode<Key, Val> head, Key key) throws BlankException {
+    private TreeNode<Key, Val> searchTree(TreeNode<Key, Val> head, Key key)
+            throws BlankException {
         if (head == null) {
             throw new BlankException("Key is not present in the tree");
         }
