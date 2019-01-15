@@ -49,7 +49,7 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
             if (head.getLeft() == null && head.getRight() == null) {
                 head = null;
             } else if (head.getLeft() != null && head.getRight() != null) {
-                TreeNode<Key, Val> right_min = findMin(head.getRight());
+                TreeNode<Key, Val> right_min = findMinItr(head.getRight());
                 head.setKey(right_min.getKey());
                 delete(head.getRight(),right_min.getKey());
             } else if (head.getLeft() != null || head.getRight() != null) {
@@ -59,7 +59,7 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
         return head;
     }
 
-    public TreeNode<Key, Val> findMin(TreeNode<Key, Val> head)
+    private TreeNode<Key, Val> findMin(TreeNode<Key, Val> head)
             throws BlankException {
         if (head == null) {
             throw new BlankException("Key is not present in the tree");
@@ -67,6 +67,20 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
             return head;
         }
         return findMin(head.getLeft());
+    }
+
+    private TreeNode<Key, Val> findMinItr(TreeNode<Key, Val> head)
+            throws BlankException {
+        if (head == null) {
+            throw new BlankException("Key is not present in the tree");
+        }
+        TreeNode<Key, Val> min_node = head;
+        TreeNode<Key, Val> temp = head;
+        while(temp.getLeft()!=null){
+            temp = temp.getLeft();
+        }
+
+        return temp;
     }
 
     private TreeNode<Key, Val> put(TreeNode<Key, Val> head, Key key, Val val) {

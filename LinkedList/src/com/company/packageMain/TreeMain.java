@@ -30,10 +30,10 @@ public class TreeMain {
         }
         System.out.println("");
         try {
-            System.out.println("Min Element of the tree: " +
-                    tree.findMin(tree.getHead()).getKey());
-            System.out.println("Min Element of the right sub tree: " +
-                    tree.findMin(tree.getHead().getRight()).getKey());
+//            System.out.println("Min Element of the tree: " +
+//                    tree.findMin(tree.getHead()).getKey());
+//            System.out.println("Min Element of the right sub tree: " +
+//                    tree.findMin(tree.getHead().getRight()).getKey());
             int key_to_search = 12;
             System.out.println("Key: " + key_to_search + " Value: " +
                     tree.get(tree.getHead(), key_to_search));
