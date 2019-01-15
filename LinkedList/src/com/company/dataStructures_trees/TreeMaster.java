@@ -63,14 +63,10 @@ public class TreeMaster<Key extends Comparable<Key>, Val>
             throws BlankException {
         if (head == null) {
             throw new BlankException("Key is not present in the tree");
+        } else if(head.getLeft()==null){
+            return head;
         }
-        if (head.getLeft() != null) {
-            findMin(head.getLeft());
-        } else if (head.getLeft() == null) {
-            System.out.println("Min: " + head.getKey());
-            head = null;
-        }
-        return head;
+        return findMin(head.getLeft());
     }
 
     private TreeNode<Key, Val> put(TreeNode<Key, Val> head, Key key, Val val) {
